@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-pthread_mutex_t wrt;
+pthread_mutex_t wrt;          //semaphore can also be used sem_t wrt
 pthread_mutex_t mutex;
 int shared_value;
 int active_reader = 0;
@@ -38,7 +38,7 @@ void *readers(void *reader_no)
 	pthread_mutex_lock(&mutex);
 	active_reader--;
 	if(active_reader == 0) {
-	pthread_mutex_unlock(&wrt); // If this is the last reader, it will wake up the writer. 
+	pthread_mutex_unlock(&wrt); // If no readers are present, it will wake up the writer thread. 
 	}
 	pthread_mutex_unlock(&mutex);
 }
